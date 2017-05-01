@@ -88,9 +88,9 @@ class FSM {
 			state;
 		
 		if (this.prevStates.length) {
-			state = this.prevStates.pop();
+			this.nextStates.push(this.activeStateName);
+            state = this.prevStates.pop();
 			this.activeStateName = state;
-			this.nextStates.push(state);
 			result = true;
 		}
 		
@@ -107,9 +107,9 @@ class FSM {
 			state;
 		
 		if (this.nextStates.length) {
-			state = this.nextStates.pop();
+			this.prevStates.push(this.activeStateName);
+            state = this.nextStates.pop();
 			this.activeStateName = state;
-			this.prevStates.push(state);
 			result = true;
 		}
 		
@@ -119,7 +119,10 @@ class FSM {
 	/**
 	 * Clears transition history
 	 */
-	clearHistory() {}
+	clearHistory() {
+        this.nextStates = [];
+        this.prevStates = [];
+    }
 }
 
 module.exports = FSM;
